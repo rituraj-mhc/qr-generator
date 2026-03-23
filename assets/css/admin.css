@@ -1,0 +1,141 @@
+.qrg-container {
+    display: flex;
+    gap: 20px;
+}
+
+.qrg-left {
+    width: 60%;
+}
+
+.qrg-left input[type=text], .qrg-left input[type=email], .qrg-left input[type=phone], .qrg-left textarea {
+    width: 100%;
+}
+
+.qrg-right {
+    flex: 1;
+    position: sticky;
+    top: 20px;
+}
+
+.qrg-accordion .qrg-item {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.qrg-header {
+    padding: 12px;
+    background: #f7f7f7;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.qrg-body {
+    padding: 12px;
+    display: none;
+}
+
+.qrg-item.active .qrg-body {
+    display: block;
+}
+
+.qrg-field {
+    margin-bottom: 12px;
+}
+
+#qrg-preview {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1 / 1;
+    background: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qrg-size {
+    margin-bottom: 15px;
+}
+
+.qrg-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.qrg-icon {
+    padding: 12px;
+    text-align: center;
+    background: #eee;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.qrg-icon.active {
+    background: #0073aa;
+    color: #fff;
+}
+
+.qrg-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.qrg-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f7f7f7;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.qrg-toggle {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Tabs */
+.qrg-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.qrg-tab {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background: #f7f7f7;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.qrg-tab.active {
+    background: #0073aa;
+    color: #fff;
+}
+
+/* Tab content */
+.qrg-tab-content {
+    display: none;
+}
+
+.qrg-tab-content.active {
+    display: block;
+}
+
+/* Foreground grid */
+.qrg-fg-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.qrg-fg-col h4 {
+    margin-bottom: 10px;
+}

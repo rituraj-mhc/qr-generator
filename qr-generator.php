@@ -23,3 +23,14 @@ add_action( 'plugins_loaded', function() {
     new QRG_Enqueue();
     new QRG_Admin_Page();
 });
+
+add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'qrg_action_links' );
+
+function qrg_action_links( $links ) {
+
+    $dashboard_link = '<a href="' . admin_url( 'admin.php?page=qr-generator' ) . '">Dashboard</a>';
+
+    array_unshift( $links, $dashboard_link );
+
+    return $links;
+}

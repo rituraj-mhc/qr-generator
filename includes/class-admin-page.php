@@ -201,10 +201,30 @@ class QRG_Admin_Page {
                                 <div class="qrg-field qrg-center-icons" style="display:none;">
                                     <label>Select Icon</label>
                                     <div class="qrg-icon-grid">
-                                        <div class="qrg-icon" data-icon="whatsapp">WA</div>
-                                        <div class="qrg-icon" data-icon="instagram">IG</div>
-                                        <div class="qrg-icon" data-icon="facebook">FB</div>
-                                        <div class="qrg-icon" data-icon="twitter">X</div>
+                                        <div class="qrg-icon" data-icon="instagram">
+                                            <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/icons/instagram.svg'; ?>" alt="Instagram">
+                                        </div>
+
+                                        <div class="qrg-icon" data-icon="facebook">
+                                            <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/icons/facebook.svg'; ?>" alt="Facebook">
+                                        </div>
+
+                                        <div class="qrg-icon" data-icon="twitter">
+                                            <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/icons/twitter.svg'; ?>" alt="Twitter">
+                                        </div>
+
+                                        <div class="qrg-icon" data-icon="whatsapp">
+                                            <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/icons/whatsapp.svg'; ?>" alt="WhatsApp">
+                                        </div>
+                                        <div class="qrg-icon" data-icon="youtube">
+                                            <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/icons/youtube.svg'; ?>" alt="YouTube">
+                                        </div>
+                                        <div class="qrg-icon" data-icon="linkedin">
+                                            <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/icons/linkedin.svg'; ?>" alt="LinkedIn">
+                                        </div>
+                                        <div class="qrg-icon" data-icon="telegram">
+                                            <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/icons/telegram.svg'; ?>" alt="Telegram">
+                                        </div>
                                     </div>
                                 </div>
 

@@ -139,3 +139,54 @@
 .qrg-fg-col h4 {
     margin-bottom: 10px;
 }
+
+.qrg-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 10px;
+}
+
+.qrg-icon {
+    background: #333;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.qrg-icon img {
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+}
+
+/* hover */
+.qrg-icon:hover {
+    background: #e0e0e0;
+}
+
+/* active */
+.qrg-icon.active {
+    background: #2271b1;
+}
+
+.qrg-icon.active img {
+    filter: brightness(0) invert(1); /* makes icon white */
+}
+
+.qrg-fg-col label {
+    margin-bottom: 20px !important;
+    display: inline-block;
+}
+
+.qrg-fg-col .qrg-dots-gradient input {
+    margin-bottom: 18px;
+}
+
+.qrg-fg-col .qrg-dots-gradient label {
+    display: block;
+    margin-bottom: 6px !important;
+}

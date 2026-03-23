@@ -137,16 +137,16 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateQR() {
 
         let dotsOptions;
-        
+
         if (qrState.colors.dots.mode === 'solid') {
-        
+
             dotsOptions = {
                 color: qrState.colors.dots.color,
                 gradient: null // 🔥 CRITICAL FIX
             };
-        
+
         } else {
-        
+
             dotsOptions = {
                 color: undefined, // 🔥 also important
                 gradient: {
@@ -159,13 +159,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             };
         }
-    
+
         let eyeColor = qrState.colors.eye.mode === 'same'
             ? (qrState.colors.dots.mode === 'solid'
                 ? qrState.colors.dots.color
                 : qrState.colors.dots.grad1)
             : qrState.colors.eye.color;
-            
+
         qr.update({
             width: 300,
             height: 300,
@@ -181,9 +181,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 color: eyeColor
             },
             image: qrState.image || undefined,
+
+            // 🔥 ALWAYS PASS OBJECT
             imageOptions: {
                 crossOrigin: "anonymous",
-                margin: 10
+            
+                // apply only if image exists
+                imageSize: qrState.image ? 0.25 : 0,
+                margin: qrState.image ? 8 : 0
             }
         });
     }
@@ -336,25 +341,35 @@ document.addEventListener("DOMContentLoaded", function () {
     centerRadiosUI.forEach(radio => {
         radio.addEventListener("change", function () {
 
+            // 🔥 Reset everything first (important)
+            qrState.center = this.value;
+            qrState.image = null;
+
+            // Hide all UI sections
             document.querySelector(".qrg-center-logo").style.display = "none";
             document.querySelector(".qrg-center-text").style.display = "none";
             document.querySelector(".qrg-center-icons").style.display = "none";
 
-            qrState.center = this.value;
-            qrState.image = null;
-
+            // Show selected UI
             if (this.value === "logo") {
                 document.querySelector(".qrg-center-logo").style.display = "block";
             }
 
             if (this.value === "text") {
                 document.querySelector(".qrg-center-text").style.display = "block";
+
+                const textVal = document.getElementById("qrg-center-text").value.trim();
+
+                if (textVal) {
+                    qrState.image = generateTextImage(textVal);
+                }
             }
 
             if (this.value === "icon") {
                 document.querySelector(".qrg-center-icons").style.display = "block";
             }
 
+            // 🔥 Clear QR image immediately
             updateQR();
         });
     });
@@ -372,15 +387,71 @@ document.addEventListener("DOMContentLoaded", function () {
             const file = e.target.files[0];
             if (!file) return;
 
+            // 🔒 Optional: basic file validation
+            if (!file.type.startsWith("image/")) {
+                alert("Please upload a valid image file");
+                return;
+            }
+
             const reader = new FileReader();
 
             reader.onload = function (event) {
+
+                // 🔥 Assign logo as base64 (safe + fast)
                 qrState.image = event.target.result;
+
                 updateQR();
             };
 
             reader.readAsDataURL(file);
         });
+    }
+
+    const textInput = document.getElementById("qrg-center-text");
+
+    if (textInput) {
+        textInput.addEventListener("input", function () {
+
+            if (qrState.center !== 'text') return;
+
+            const value = this.value.trim();
+
+            if (!value) {
+                qrState.image = null;
+                updateQR();
+                return;
+            }
+
+            // 🔥 convert text → image
+            qrState.image = generateTextImage(value);
+
+            updateQR();
+        });
+    }
+
+    function generateTextImage(text) {
+
+        const canvas = document.createElement("canvas");
+        const size = 200;
+
+        canvas.width = size;
+        canvas.height = size;
+
+        const ctx = canvas.getContext("2d");
+
+        // 🔥 white background (important for scan safety later)
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, size, size);
+
+        // 🔤 text style
+        ctx.fillStyle = "#000000";
+        ctx.font = "bold 60px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.fillText(text, size / 2, size / 2);
+
+        return canvas.toDataURL("image/png");
     }
 
     /*
@@ -395,11 +466,56 @@ document.addEventListener("DOMContentLoaded", function () {
             this.classList.add("active");
 
             const iconName = this.dataset.icon;
-            qrState.image = qrgData.assets_url + 'icons/' + iconName + '.svg';
 
-            updateQR();
+            generateIconImage(iconName, "#000000").then(imgData => {
+
+                if (!imgData) return;
+
+                qrState.image = imgData;
+                updateQR();
+            });
         });
     });
+
+    function generateIconImage(iconName, bgColor = "#000000") {
+
+        return new Promise((resolve) => {
+
+            const size = 200;
+            const canvas = document.createElement("canvas");
+            canvas.width = size;
+            canvas.height = size;
+
+            const ctx = canvas.getContext("2d");
+
+            // 🔵 circle background
+            ctx.fillStyle = bgColor;
+            ctx.beginPath();
+            ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            const img = new Image();
+
+            // 🔥 load SVG from plugin folder
+            img.src = qrgData.assets_url + "icons/" + iconName + ".svg";
+
+            img.onload = function () {
+
+                const iconSize = size * 0.6;
+                const x = (size - iconSize) / 2;
+                const y = (size - iconSize) / 2;
+
+                ctx.drawImage(img, x, y, iconSize, iconSize);
+
+                resolve(canvas.toDataURL("image/png"));
+            };
+
+            img.onerror = function () {
+                console.error("Icon failed:", iconName);
+                resolve(null);
+            };
+        });
+    }
 
     /*
     -------------------------

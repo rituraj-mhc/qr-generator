@@ -15,6 +15,11 @@
     flex: 1;
     position: sticky;
     top: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .qrg-accordion .qrg-item {
@@ -96,7 +101,7 @@
 }
 
 .qrg-toggle {
-    font-size: 18px;
+    font-size: 25px;
     font-weight: bold;
 }
 
@@ -190,3 +195,10 @@
     display: block;
     margin-bottom: 6px !important;
 }
+
+#qrg-email-body {
+    min-height: 80px;
+    resize: vertical;
+}
+
+

@@ -15,7 +15,7 @@ class QRG_Admin_Page {
             'manage_options',
             'qr-generator',
             [ $this, 'render' ],
-            'dashicons-qrcode',
+            'dashicons-admin-site',
             25
         );
     }
@@ -66,8 +66,16 @@ class QRG_Admin_Page {
                                 </div>
 
                                 <div class="qrg-field qrg-type-field" data-type="email" style="display:none;">
+
                                     <label>Email</label>
                                     <input type="email" id="qrg-email">
+                                
+                                    <label>Subject</label>
+                                    <input type="text" id="qrg-email-subject">
+                                
+                                    <label>Message</label>
+                                    <textarea id="qrg-email-body"></textarea>
+                                
                                 </div>
 
                                 <div class="qrg-field qrg-type-field" data-type="phone" style="display:none;">

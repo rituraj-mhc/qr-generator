@@ -122,8 +122,30 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (qrState.type === 'email') {
+
             const email = document.getElementById('qrg-email').value.trim();
-            return email ? `mailto:${email}` : '';
+            const subject = document.getElementById('qrg-email-subject').value.trim();
+            const body = document.getElementById('qrg-email-body').value.trim();
+
+            if (!email) return '';
+
+            let url = `mailto:${email}`;
+
+            let params = [];
+
+            if (subject) {
+                params.push(`subject=${encodeURIComponent(subject)}`);
+            }
+        
+            if (body) {
+                params.push(`body=${encodeURIComponent(body)}`);
+            }
+        
+            if (params.length) {
+                url += '?' + params.join('&');
+            }
+        
+            return url;
         }
 
         if (qrState.type === 'phone') {
@@ -297,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
     INPUT EVENTS
     -------------------------
     */
-    ['qrg-url','qrg-text','qrg-email','qrg-phone'].forEach(id => {
+    ['qrg-url','qrg-text','qrg-email', 'qrg-email-subject', 'qrg-email-body', 'qrg-phone'].forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
 

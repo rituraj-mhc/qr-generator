@@ -409,19 +409,40 @@ document.addEventListener("DOMContentLoaded", function () {
             const file = e.target.files[0];
             if (!file) return;
 
-            // 🔒 Optional: basic file validation
-            if (!file.type.startsWith("image/")) {
-                alert("Please upload a valid image file");
+            // ✅ 1. SIZE CHECK (2MB)
+            const maxSize = 2 * 1024 * 1024;
+
+            if (file.size > maxSize) {
+                alert("File size must be less than 2MB");
+                logoInput.value = "";
                 return;
             }
 
+            // ✅ 2. TYPE CHECK
+            const allowedTypes = [
+                "image/svg+xml",
+                "image/png",
+                "image/jpeg",
+                "image/jpg"
+            ];
+
+            const allowedExtensions = [
+                "svg", "png", "jpeg", "jpg"
+            ];
+
+            const fileExt = file.name.split('.').pop().toLowerCase();
+
+            if (!allowedTypes.includes(file.type) && !allowedExtensions.includes(fileExt)) {
+                alert("Invalid file type. Allowed: JPG, JPEG, PNG, SVG");
+                logoInput.value = "";
+                return;
+            }
+
+            // ✅ READ FILE
             const reader = new FileReader();
 
             reader.onload = function (event) {
-
-                // 🔥 Assign logo as base64 (safe + fast)
                 qrState.image = event.target.result;
-
                 updateQR();
             };
 

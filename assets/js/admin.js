@@ -23,6 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     c.classList.add("active");
                 }
             });
+
+            refreshOpenAccordion();
         });
     });
 
@@ -39,18 +41,75 @@ document.addEventListener("DOMContentLoaded", function () {
     ACCORDION
     -------------------------
     */
+
+    function animateHeight(el, toHeight) {
+        const fromHeight = el.offsetHeight;
+        
+        el.style.height = fromHeight + "px";
+        
+        requestAnimationFrame(() => {
+            el.style.height = toHeight + "px";
+        });
+    }
+
+    function refreshOpenAccordion() {
+        const openItem = document.querySelector(".qrg-item.active");
+        if (!openItem) return;
+
+        const body = openItem.querySelector(".qrg-body");
+        if (!body) return;
+
+        // 🔥 RESET HEIGHT FIRST
+        body.style.height = "auto";
+
+        const newHeight = body.scrollHeight;
+
+        // 🔥 SET BACK TO CURRENT HEIGHT BEFORE ANIMATION
+        body.style.height = body.offsetHeight + "px";
+
+        requestAnimationFrame(() => {
+            body.style.height = newHeight + "px";
+        });
+    }
+
     document.querySelectorAll(".qrg-header").forEach(header => {
         header.addEventListener("click", function () {
 
             const item = this.parentElement;
-            const toggle = this.querySelector(".qrg-toggle");
+            const body = item.querySelector(".qrg-body");
 
-            item.classList.toggle("active");
+            const isOpen = item.classList.contains("active");
 
-            if (item.classList.contains("active")) {
-                toggle.textContent = "−";
-            } else {
-                toggle.textContent = "+";
+            // CLOSE ALL
+            document.querySelectorAll(".qrg-item").forEach(i => {
+                const b = i.querySelector(".qrg-body");
+
+                if (b) {
+                    animateHeight(b, 0);
+                }
+
+                i.classList.remove("active");
+
+                const t = i.querySelector(".qrg-toggle");
+                if (t) t.textContent = "+";
+            });
+
+            // OPEN CLICKED
+            if (!isOpen) {
+            
+                // 🔥 apply active FIRST (so padding is applied)
+                item.classList.add("active");
+            
+                // 🔥 wait for DOM to update, then measure
+                requestAnimationFrame(() => {
+                
+                    const fullHeight = body.scrollHeight;
+                
+                    animateHeight(body, fullHeight);
+                });
+            
+                const toggle = this.querySelector(".qrg-toggle");
+                if (toggle) toggle.textContent = "−";
             }
         });
     });
@@ -163,6 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateQR() {
         qr.update(getQRConfig(300));
+        refreshOpenAccordion();
     }
 
     document.querySelectorAll('input[name="qrg-dots-mode"]').forEach(radio => {
@@ -659,17 +719,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll("#qrg-eye-ball .qrg-design-item").forEach(item => {
         item.addEventListener("click", function () {
-        
+
             // remove active
             document.querySelectorAll("#qrg-eye-ball .qrg-design-item")
                 .forEach(i => i.classList.remove("active"));
-        
+
             // set active
             this.classList.add("active");
-        
+
             // update state
             qrState.design.eyeBall = this.dataset.value;
-        
+
             // update QR
             updateQR();
         });

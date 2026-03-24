@@ -36,11 +36,6 @@
     font-weight: 600;
 }
 
-.qrg-body {
-    padding: 12px;
-    display: none;
-}
-
 .qrg-item.active .qrg-body {
     display: block;
 }
@@ -240,5 +235,21 @@
     border: 2px solid #007cba;
     background: #e7f3ff;
 }
+
+.qrg-body {
+    height: 0;
+    overflow: hidden;
+
+    padding: 0 15px; /* 👈 horizontal stays */
+    transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* expanded */
+.qrg-item.active .qrg-body {
+    padding-top: 15px;
+    padding-bottom: 0;
+}
+
+
 
 

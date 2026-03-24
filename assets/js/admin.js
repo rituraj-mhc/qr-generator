@@ -83,7 +83,12 @@ document.addEventListener("DOMContentLoaded", function () {
         },
 
         center: 'none',
-        image: null
+        image: null,
+        design: {
+            body: 'square',
+            eyeFrame: 'square',
+            eyeBall: 'square'
+        }
     };
 
     /*
@@ -157,62 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateQR() {
-
-        let dotsOptions;
-
-        if (qrState.colors.dots.mode === 'solid') {
-
-            dotsOptions = {
-                color: qrState.colors.dots.color,
-                gradient: null // 🔥 CRITICAL FIX
-            };
-
-        } else {
-
-            dotsOptions = {
-                color: undefined, // 🔥 also important
-                gradient: {
-                    type: "linear",
-                    rotation: parseInt(qrState.colors.dots.rotation),
-                    colorStops: [
-                        { offset: 0, color: qrState.colors.dots.grad1 },
-                        { offset: 1, color: qrState.colors.dots.grad2 }
-                    ]
-                }
-            };
-        }
-
-        let eyeColor = qrState.colors.eye.mode === 'same'
-            ? (qrState.colors.dots.mode === 'solid'
-                ? qrState.colors.dots.color
-                : qrState.colors.dots.grad1)
-            : qrState.colors.eye.color;
-
-        qr.update({
-            width: 300,
-            height: 300,
-            data: qrState.data || ' ',
-            dotsOptions: dotsOptions,
-            backgroundOptions: {
-                color: qrState.colors.bg
-            },
-            cornersSquareOptions: {
-                color: eyeColor
-            },
-            cornersDotOptions: {
-                color: eyeColor
-            },
-            image: qrState.image || undefined,
-
-            // 🔥 ALWAYS PASS OBJECT
-            imageOptions: {
-                crossOrigin: "anonymous",
-            
-                // apply only if image exists
-                imageSize: qrState.image ? 0.50 : 0,
-                margin: qrState.image ? 8 : 0
-            }
-        });
+        qr.update(getQRConfig(300));
     }
 
     document.querySelectorAll('input[name="qrg-dots-mode"]').forEach(radio => {
@@ -366,23 +316,23 @@ document.addEventListener("DOMContentLoaded", function () {
             // 🔥 Reset everything first (important)
             const logoInput = document.getElementById("qrg-logo");
             const removeBtn = document.getElementById("qrg-remove-logo");
-                    
+
             qrState.center = this.value;
-                    
+
             // ✅ clear logo if switching away
             qrState.image = null;
-                    
+
             if (logoInput) {
                 logoInput.value = ""; // 🔥 force reset file input
             }
-            
+
             if (removeBtn) {
                 removeBtn.style.display = "none";
             }
-            
+
             // optional: clear active icon selection too
             document.querySelectorAll(".qrg-icon").forEach(i => i.classList.remove("active"));
-            
+
             updateQR();
 
             // Hide all UI sections
@@ -628,6 +578,9 @@ document.addEventListener("DOMContentLoaded", function () {
             };
         }
 
+        // ✅ APPLY BODY SHAPE HERE
+        dotsOptions.type = qrState.design.body;
+
         let eyeColor = qrState.colors.eye.mode === 'same'
             ? (qrState.colors.dots.mode === 'solid'
                 ? qrState.colors.dots.color
@@ -638,17 +591,28 @@ document.addEventListener("DOMContentLoaded", function () {
             width: size,
             height: size,
             data: qrState.data || ' ',
+
+            // ✅ BODY SHAPE APPLIED
             dotsOptions: dotsOptions,
+
             backgroundOptions: {
                 color: qrState.colors.bg
             },
+        
+            // ✅ EYE FRAME SHAPE APPLIED
             cornersSquareOptions: {
-                color: eyeColor
+                color: eyeColor,
+                type: qrState.design.eyeFrame
             },
+        
+            // ✅ EYE BALL SHAPE APPLIED
             cornersDotOptions: {
-                color: eyeColor
+                color: eyeColor,
+                type: qrState.design.eyeBall
             },
+        
             image: qrState.image || undefined,
+        
             imageOptions: {
                 crossOrigin: "anonymous",
                 imageSize: qrState.image ? 0.50 : 0,
@@ -656,6 +620,21 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         };
     }
+
+    document.getElementById("qrg-body-shape").addEventListener("change", function () {
+        qrState.design.body = this.value;
+        updateQR();
+    });
+
+    document.getElementById("qrg-eye-frame").addEventListener("change", function () {
+        qrState.design.eyeFrame = this.value;
+        updateQR();
+    });
+
+    document.getElementById("qrg-eye-ball").addEventListener("change", function () {
+        qrState.design.eyeBall = this.value;
+        updateQR();
+    });
 
     /*
     -------------------------

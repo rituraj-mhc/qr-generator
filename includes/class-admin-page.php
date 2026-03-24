@@ -250,7 +250,33 @@ class QRG_Admin_Page {
                                 <span class="qrg-toggle">+</span>
                             </div>
                             <div class="qrg-body">
-                                <p>Coming next…</p>
+                                <div class="qrg-field">
+                                    <label>Body Shape</label>
+                                    <select id="qrg-body-shape">
+                                        <option value="square">Square</option>
+                                        <option value="dots">Dots</option>
+                                        <option value="rounded">Rounded</option>
+                                        <option value="classy">Classy</option>
+                                        <option value="classy-rounded">Classy Rounded</option>
+                                        <option value="extra-rounded">Extra Rounded</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="qrg-field">
+                                    <label>Eye Frame Shape</label>
+                                    <select id="qrg-eye-frame">
+                                        <option value="square">Square</option>
+                                        <option value="extra-rounded">Rounded</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="qrg-field">
+                                    <label>Eye Ball Shape</label>
+                                    <select id="qrg-eye-ball">
+                                        <option value="square">Square</option>
+                                        <option value="dot">Dot</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 

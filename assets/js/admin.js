@@ -539,6 +539,58 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    function getQRConfig(size) {
+
+        let dotsOptions;
+
+        if (qrState.colors.dots.mode === 'solid') {
+            dotsOptions = {
+                color: qrState.colors.dots.color,
+                gradient: null
+            };
+        } else {
+            dotsOptions = {
+                color: undefined,
+                gradient: {
+                    type: "linear",
+                    rotation: parseInt(qrState.colors.dots.rotation),
+                    colorStops: [
+                        { offset: 0, color: qrState.colors.dots.grad1 },
+                        { offset: 1, color: qrState.colors.dots.grad2 }
+                    ]
+                }
+            };
+        }
+
+        let eyeColor = qrState.colors.eye.mode === 'same'
+            ? (qrState.colors.dots.mode === 'solid'
+                ? qrState.colors.dots.color
+                : qrState.colors.dots.grad1)
+            : qrState.colors.eye.color;
+
+        return {
+            width: size,
+            height: size,
+            data: qrState.data || ' ',
+            dotsOptions: dotsOptions,
+            backgroundOptions: {
+                color: qrState.colors.bg
+            },
+            cornersSquareOptions: {
+                color: eyeColor
+            },
+            cornersDotOptions: {
+                color: eyeColor
+            },
+            image: qrState.image || undefined,
+            imageOptions: {
+                crossOrigin: "anonymous",
+                imageSize: qrState.image ? 0.25 : 0,
+                margin: qrState.image ? 8 : 0
+            }
+        };
+    }
+
     /*
     -------------------------
     DOWNLOAD
@@ -547,9 +599,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const buttons = document.querySelectorAll(".qrg-actions button");
 
     if (buttons.length) {
-        buttons[0].addEventListener("click", () => qr.download({ name: "qr", extension: "png" }));
-        buttons[1].addEventListener("click", () => qr.download({ name: "qr", extension: "svg" }));
-        buttons[2].addEventListener("click", () => qr.download({ name: "qr", extension: "jpeg" }));
+    
+        buttons[0].addEventListener("click", () => downloadQR("png"));
+        buttons[1].addEventListener("click", () => downloadQR("svg"));
+        buttons[2].addEventListener("click", () => downloadQR("jpeg"));
+    }
+
+    function downloadQR(format) {
+
+        const tempQR = new QRCodeStyling(getQRConfig(qrState.size));
+        
+        tempQR.download({
+            name: "qr",
+            extension: format
+        });
     }
 
 

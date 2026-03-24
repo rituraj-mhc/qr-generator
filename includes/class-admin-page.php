@@ -252,30 +252,32 @@ class QRG_Admin_Page {
                             <div class="qrg-body">
                                 <div class="qrg-field">
                                     <label>Body Shape</label>
-                                    <select id="qrg-body-shape">
-                                        <option value="square">Square</option>
-                                        <option value="dots">Dots</option>
-                                        <option value="rounded">Rounded</option>
-                                        <option value="classy">Classy</option>
-                                        <option value="classy-rounded">Classy Rounded</option>
-                                        <option value="extra-rounded">Extra Rounded</option>
-                                    </select>
+                                    <div class="qrg-design-grid" id="qrg-body-shape">
+
+                                        <div class="qrg-design-item active" data-value="square">■</div>
+                                        <div class="qrg-design-item" data-value="dots">●</div>
+                                        <div class="qrg-design-item" data-value="rounded">⬛</div>
+                                        <div class="qrg-design-item" data-value="classy">✦</div>
+                                        <div class="qrg-design-item" data-value="classy-rounded">✦⬛</div>
+                                        <div class="qrg-design-item" data-value="extra-rounded">⬛⬛</div>
+                                    
+                                    </div>
                                 </div>
-                                
+
                                 <div class="qrg-field">
                                     <label>Eye Frame Shape</label>
-                                    <select id="qrg-eye-frame">
-                                        <option value="square">Square</option>
-                                        <option value="extra-rounded">Rounded</option>
-                                    </select>
+                                    <div class="qrg-design-grid" id="qrg-eye-frame">
+                                        <div class="qrg-design-item active" data-value="square">◼</div>
+                                        <div class="qrg-design-item" data-value="extra-rounded">⬛</div>
+                                    </div>
                                 </div>
-                                
+
                                 <div class="qrg-field">
                                     <label>Eye Ball Shape</label>
-                                    <select id="qrg-eye-ball">
-                                        <option value="square">Square</option>
-                                        <option value="dot">Dot</option>
-                                    </select>
+                                    <div class="qrg-design-grid" id="qrg-eye-ball">
+                                        <div class="qrg-design-item active" data-value="square">■</div>
+                                        <div class="qrg-design-item" data-value="dot">●</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -621,19 +621,58 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
-    document.getElementById("qrg-body-shape").addEventListener("change", function () {
-        qrState.design.body = this.value;
-        updateQR();
+    document.querySelectorAll("#qrg-body-shape .qrg-design-item").forEach(item => {
+        item.addEventListener("click", function () {
+
+            // 🔥 remove active from all
+            document.querySelectorAll("#qrg-body-shape .qrg-design-item")
+                .forEach(i => i.classList.remove("active"));
+
+            // 🔥 set active on clicked
+            this.classList.add("active");
+
+            // 🔥 update state
+            qrState.design.body = this.dataset.value;
+
+            // 🔥 update QR
+            updateQR();
+        });
     });
 
-    document.getElementById("qrg-eye-frame").addEventListener("change", function () {
-        qrState.design.eyeFrame = this.value;
-        updateQR();
+    document.querySelectorAll("#qrg-eye-frame .qrg-design-item").forEach(item => {
+        item.addEventListener("click", function () {
+        
+            // remove active
+            document.querySelectorAll("#qrg-eye-frame .qrg-design-item")
+                .forEach(i => i.classList.remove("active"));
+        
+            // set active
+            this.classList.add("active");
+        
+            // update state
+            qrState.design.eyeFrame = this.dataset.value;
+        
+            // update QR
+            updateQR();
+        });
     });
 
-    document.getElementById("qrg-eye-ball").addEventListener("change", function () {
-        qrState.design.eyeBall = this.value;
-        updateQR();
+    document.querySelectorAll("#qrg-eye-ball .qrg-design-item").forEach(item => {
+        item.addEventListener("click", function () {
+        
+            // remove active
+            document.querySelectorAll("#qrg-eye-ball .qrg-design-item")
+                .forEach(i => i.classList.remove("active"));
+        
+            // set active
+            this.classList.add("active");
+        
+            // update state
+            qrState.design.eyeBall = this.dataset.value;
+        
+            // update QR
+            updateQR();
+        });
     });
 
     /*

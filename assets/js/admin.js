@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 crossOrigin: "anonymous",
             
                 // apply only if image exists
-                imageSize: qrState.image ? 0.25 : 0,
+                imageSize: qrState.image ? 0.50 : 0,
                 margin: qrState.image ? 8 : 0
             }
         });
@@ -585,7 +585,7 @@ document.addEventListener("DOMContentLoaded", function () {
             image: qrState.image || undefined,
             imageOptions: {
                 crossOrigin: "anonymous",
-                imageSize: qrState.image ? 0.25 : 0,
+                imageSize: qrState.image ? 0.50 : 0,
                 margin: qrState.image ? 8 : 0
             }
         };

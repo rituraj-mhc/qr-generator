@@ -201,4 +201,16 @@
     resize: vertical;
 }
 
+#qrg-remove-logo {
+    margin-top: 8px;
+    background: #dc3232;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
+#qrg-remove-logo:hover {
+    background: #b32d2e;
+}

@@ -199,6 +199,10 @@ class QRG_Admin_Page {
                                 <div class="qrg-field qrg-center-logo" style="display:none;">
                                     <label>Upload Logo</label>
                                     <input type="file" id="qrg-logo" accept=".svg,.png,.jpeg,.jpg">
+
+                                    <button type="button" id="qrg-remove-logo" style="display:none;">
+                                        Remove Logo
+                                    </button>
                                 </div>
 
                                 <div class="qrg-field qrg-center-text" style="display:none;">

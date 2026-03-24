@@ -364,8 +364,26 @@ document.addEventListener("DOMContentLoaded", function () {
         radio.addEventListener("change", function () {
 
             // 🔥 Reset everything first (important)
+            const logoInput = document.getElementById("qrg-logo");
+            const removeBtn = document.getElementById("qrg-remove-logo");
+                    
             qrState.center = this.value;
+                    
+            // ✅ clear logo if switching away
             qrState.image = null;
+                    
+            if (logoInput) {
+                logoInput.value = ""; // 🔥 force reset file input
+            }
+            
+            if (removeBtn) {
+                removeBtn.style.display = "none";
+            }
+            
+            // optional: clear active icon selection too
+            document.querySelectorAll(".qrg-icon").forEach(i => i.classList.remove("active"));
+            
+            updateQR();
 
             // Hide all UI sections
             document.querySelector(".qrg-center-logo").style.display = "none";
@@ -445,6 +463,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 qrState.image = event.target.result;
                 updateQR();
             };
+
+            const removeBtn = document.getElementById("qrg-remove-logo");
+
+            reader.onload = function (event) {
+                qrState.image = event.target.result;
+            
+                if (removeBtn) removeBtn.style.display = "inline-block";
+            
+                updateQR();
+            };
+
+            if (removeBtn) {
+                removeBtn.addEventListener("click", function () {
+                
+                    // clear state
+                    qrState.image = null;
+                
+                    // reset input
+                    logoInput.value = "";
+                
+                    // hide button
+                    removeBtn.style.display = "none";
+                
+                    // update QR
+                    updateQR();
+                });
+            }
 
             reader.readAsDataURL(file);
         });

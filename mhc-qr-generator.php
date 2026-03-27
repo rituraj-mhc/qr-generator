@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: QR Generator
+ * Plugin Name: MHC QR Generator
  * Description: Admin-only QR Code Generator with styling and center content options.
  * Version: 1.0.0
- * Author: Your Name
+ * Author: myheartcreative
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
